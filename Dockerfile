@@ -30,6 +30,9 @@ RUN useradd \
 # Disable sudo password checking for users of the sudo group
 RUN sed -i '/%sudo[[:space:]]/ s/ALL[[:space:]]*$/NOPASSWD:ALL/' /etc/sudoers
 
+# Open up to all addresses not just localhost
+RUN sed -i "s/^Listen localhost:631/Listen *:631/" /etc/cups/cupsd.conf
+
 # Clean image
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* && mkdir /var/lib/apt/lists/partial
